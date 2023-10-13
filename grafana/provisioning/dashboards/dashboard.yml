@@ -1,0 +1,43 @@
+apiVersion: 1
+
+providers:
+- name: 'etcd'
+  orgId: 1
+  folder: ''
+  type: file
+  disableDeletion: false
+  updateIntervalSeconds: 1
+  editable: true
+  options:
+    path: /etc/grafana/provisioning/dashboards/etcd.json
+    foldersFromFilesStructure: true
+- name: 'puts'
+  orgId: 1
+  folder: ''
+  type: file
+  disableDeletion: false
+  updateIntervalSeconds: 1
+  editable: true
+  options:
+    path: /etc/grafana/provisioning/dashboards/puts-rates.json
+    foldersFromFilesStructure: true
+- name: 'ranges'
+  orgId: 1
+  folder: ''
+  type: file
+  disableDeletion: false
+  updateIntervalSeconds: 1
+  editable: true
+  options:
+    path: /etc/grafana/provisioning/dashboards/ranges-rates.json
+    foldersFromFilesStructure: true
+- name: 'peers'
+  orgId: 1
+  folder: ''
+  type: file
+  disableDeletion: false
+  updateIntervalSeconds: 1
+  editable: true
+  options:
+    path: /etc/grafana/provisioning/dashboards/peers.json
+    foldersFromFilesStructure: true
