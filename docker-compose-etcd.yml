@@ -1,0 +1,74 @@
+version: '3.8'
+
+x-variables:
+    flag_initial_cluster_token: &flag_initial_cluster_token '--initial-cluster-token=tkn'
+    common_settings: &common_settings
+        image: docker.io/bkanivets/etcd:v3.5.9-arm64
+        restart: always
+        entrypoint: /usr/local/bin/etcd
+
+services:
+  etcd-1:
+      <<: *common_settings
+      environment:
+        - GOFAIL_HTTP=0.0.0.0:11180
+      command:
+          - '--name=etcd-1'
+          - '--initial-advertise-peer-urls=http://etcd-1:2380'
+          - '--listen-peer-urls=http://0.0.0.0:2380'
+          - '--listen-client-urls=http://0.0.0.0:2379'
+          - '--advertise-client-urls=http://etcd-1:2379'
+          - '--heartbeat-interval=250'
+          - '--election-timeout=1250'
+          - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
+          - '--initial-cluster-state=new'
+          - *flag_initial_cluster_token
+      ports:
+          - 2379:2379
+          - 11180:11180
+      # volumes:
+      #     - ./etcd1:/etcd_data
+
+  etcd-2:
+      <<: *common_settings
+      environment:
+        - GOFAIL_HTTP=0.0.0.0:11180
+      command:
+          - '--name=etcd-2'
+          - '--initial-advertise-peer-urls=http://etcd-2:2380'
+          - '--listen-peer-urls=http://0.0.0.0:2380'
+          - '--listen-client-urls=http://0.0.0.0:2379'
+          - '--advertise-client-urls=http://etcd-2:2379'
+          - '--heartbeat-interval=250'
+          - '--election-timeout=1250'
+          - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
+          - '--initial-cluster-state=new'
+          - *flag_initial_cluster_token
+      ports:
+          - 22379:2379
+          - 21180:11180
+      # volumes:
+      #     - ./etcd2:/etcd_data
+
+  etcd-3:
+      <<: *common_settings
+      environment:
+        - GOFAIL_HTTP=0.0.0.0:11180
+      command:
+          - '--name=etcd-3'
+          - '--initial-advertise-peer-urls=http://etcd-3:2380'
+          - '--listen-peer-urls=http://0.0.0.0:2380'
+          - '--listen-client-urls=http://0.0.0.0:2379'
+          - '--advertise-client-urls=http://etcd-3:2379'
+          - '--heartbeat-interval=250'
+          - '--election-timeout=1250'
+          - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
+          - '--initial-cluster-state=new'
+          - *flag_initial_cluster_token
+      ports:
+          - 32379:2379
+          - 31180:11180
+      # volumes:
+      #     - ./etcd3:/etcd_data
+
+

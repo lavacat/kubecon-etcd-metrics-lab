@@ -1,46 +1,47 @@
 version: '3.8'
 
 x-variables:
+    # bridge-faults: &bridge-faults
+    #     - '-tx-delay=100ms'
+    #     - '-rx-delay=100ms'        
+    #     - '-conn-fault-rate=1'
+
     flag_initial_cluster_token: &flag_initial_cluster_token '--initial-cluster-token=tkn'
     common_settings: &common_settings
         image: docker.io/bkanivets/etcd:v3.5.9-arm64
         restart: always
         entrypoint: /usr/local/bin/etcd
 
-volumes:
-  prometheus_data:
-  grafana_data:
-
 services:
-  prometheus:
-    image: prom/prometheus
-    restart: always
-    volumes:
-      - ./prometheus:/etc/prometheus/
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
-    ports:
-      - 9090:9090
+  bridge-1:
+      image: docker.io/bkanivets/etcd:v3.5.9-arm64
+      restart: always
+      entrypoint: /usr/local/bin/bridge
+      command:
+        - '-rx-delay=1000ms'         
+        - '-conn-fault-rate=1'
+        - 'bridge-1:11111'
+        - 'etcd-1:2380'
 
-  grafana:
-    image: grafana/grafana
-    restart: always
-    user: '472'
-    environment:
-      GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
-    env_file:
-      - ./grafana/config.monitoring
-    ports:
-      - 3000:3000
-    depends_on:
-      - prometheus
+  bridge-2:
+      image: docker.io/bkanivets/etcd:v3.5.9-arm64
+      restart: always
+      entrypoint: /usr/local/bin/bridge
+      command:
+        - '-rx-delay=1000ms'         
+        - '-conn-fault-rate=1'
+        - 'bridge-2:11111'
+        - 'etcd-2:2380'
+
+  bridge-3:
+      image: docker.io/bkanivets/etcd:v3.5.9-arm64
+      restart: always
+      entrypoint: /usr/local/bin/bridge
+      command:
+        - '-rx-delay=1000ms'         
+        - '-conn-fault-rate=1'
+        - 'bridge-3:11111'
+        - 'etcd-3:2380'
 
   etcd-1:
       <<: *common_settings
@@ -48,13 +49,13 @@ services:
         - GOFAIL_HTTP=0.0.0.0:11180
       command:
           - '--name=etcd-1'
-          - '--initial-advertise-peer-urls=http://etcd-1:2380'
+          - '--initial-advertise-peer-urls=http://bridge-1:11111'
           - '--listen-peer-urls=http://0.0.0.0:2380'
           - '--listen-client-urls=http://0.0.0.0:2379'
           - '--advertise-client-urls=http://etcd-1:2379'
           - '--heartbeat-interval=250'
           - '--election-timeout=1250'
-          - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
+          - '--initial-cluster=etcd-1=http://bridge-1:11111,etcd-2=http://bridge-2:11111,etcd-3=http://bridge-3:11111'
           - '--initial-cluster-state=new'
           - *flag_initial_cluster_token
       ports:
@@ -69,13 +70,13 @@ services:
         - GOFAIL_HTTP=0.0.0.0:11180
       command:
           - '--name=etcd-2'
-          - '--initial-advertise-peer-urls=http://etcd-2:2380'
+          - '--initial-advertise-peer-urls=http://bridge-2:11111'
           - '--listen-peer-urls=http://0.0.0.0:2380'
           - '--listen-client-urls=http://0.0.0.0:2379'
           - '--advertise-client-urls=http://etcd-2:2379'
           - '--heartbeat-interval=250'
           - '--election-timeout=1250'
-          - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
+          - '--initial-cluster=etcd-1=http://bridge-1:11111,etcd-2=http://bridge-2:11111,etcd-3=http://bridge-3:11111'
           - '--initial-cluster-state=new'
           - *flag_initial_cluster_token
       ports:
@@ -90,13 +91,13 @@ services:
         - GOFAIL_HTTP=0.0.0.0:11180
       command:
           - '--name=etcd-3'
-          - '--initial-advertise-peer-urls=http://etcd-3:2380'
+          - '--initial-advertise-peer-urls=http://bridge-3:11111'
           - '--listen-peer-urls=http://0.0.0.0:2380'
           - '--listen-client-urls=http://0.0.0.0:2379'
           - '--advertise-client-urls=http://etcd-3:2379'
           - '--heartbeat-interval=250'
           - '--election-timeout=1250'
-          - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
+          - '--initial-cluster=etcd-1=http://bridge-1:11111,etcd-2=http://bridge-2:11111,etcd-3=http://bridge-3:11111'
           - '--initial-cluster-state=new'
           - *flag_initial_cluster_token
       ports:
