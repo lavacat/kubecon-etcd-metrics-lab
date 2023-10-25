@@ -22,6 +22,7 @@ services:
           - '--election-timeout=1250'
           - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
           - '--initial-cluster-state=new'
+          - '--metrics=extensive'
           - *flag_initial_cluster_token
       ports:
           - 2379:2379
@@ -43,6 +44,7 @@ services:
           - '--election-timeout=1250'
           - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
           - '--initial-cluster-state=new'
+          - '--metrics=extensive'
           - *flag_initial_cluster_token
       ports:
           - 22379:2379
@@ -64,6 +66,7 @@ services:
           - '--election-timeout=1250'
           - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
           - '--initial-cluster-state=new'
+          - '--metrics=extensive'
           - *flag_initial_cluster_token
       ports:
           - 32379:2379
