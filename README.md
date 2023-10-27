@@ -40,3 +40,5 @@ Adjust `-rx-delay` in docker-compose-etcd-bridge.yml
 - [draw.io](https://draw.io)
 - [boltDB](https://github.com/boltdb/bolt.git)
 - [etcd](https://etcd.io/)
+
+- grafana and prometheus configs are from [docker-compose-stacks](https://github.com/ninadingole/docker-compose-stacks)
