@@ -277,7 +277,7 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "s"
         },
         "overrides": []
       },
@@ -286,6 +286,101 @@
         "w": 24,
         "x": 0,
         "y": 19
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.90, rate(grpc_server_handling_seconds_bucket{grpc_method=\"Range\"}[5m])) > 0",
+          "instant": false,
+          "legendFormat": "{{instance}}: {{grpc_code}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "grpc: range latency p90",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 28
       },
       "id": 6,
       "options": {
@@ -323,7 +418,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 37
       },
       "id": 8,
       "panels": [],
@@ -392,7 +487,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 38
       },
       "id": 2,
       "options": {
@@ -486,7 +581,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 47
       },
       "id": 3,
       "options": {
@@ -524,7 +619,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 47
+        "y": 56
       },
       "id": 9,
       "panels": [],
@@ -593,7 +688,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 48
+        "y": 57
       },
       "id": 4,
       "options": {
@@ -641,6 +736,6 @@
   "timezone": "",
   "title": "Ranges",
   "uid": "ad0da30b-2128-4455-8cef-31424b06b7b9",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }
