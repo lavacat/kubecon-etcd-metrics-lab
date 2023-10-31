@@ -43,7 +43,7 @@ Run `put` benchmark with 1000 clients
 ```bash
 docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=100000
 ```
-Observer behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
+Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
 
 ### Add large delay
 ```bash
@@ -57,7 +57,7 @@ Run `range` benchmark with 100 clients (while prior benchmark is still running)
 docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 range /
 ```
 
-Observer behavior at [Ranges](http://localhost:3000/d/ad0da30b-2128-4455-8cef-31424b06b7b9/ranges) dashboard.
+Observe behavior at [Ranges](http://localhost:3000/d/ad0da30b-2128-4455-8cef-31424b06b7b9/ranges) dashboard.
 
 Try `range` benchmark with `--consistency=s`
 ```bash
@@ -81,7 +81,7 @@ Run `put` benchmark with 1000 clients
 ```bash
 docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=100000
 ```
-Observer behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
+Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
 
 
 ## Scenario 3: reaching DB size limit
@@ -97,8 +97,52 @@ Run `put` benchmark with increased val size
 docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=10000 --key-space-size=100000 --total=10000000
 ```
 
-Default limit it 2Gb. Observer behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
+Default limit it 2Gb. Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
 
+## Scenario 4: compaction and defragmentation
+
+Run `put` benchmark with `compaction`
+```bash
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 compact-index-delta=100 --compact-interval=10s
+```
+
+Observe behavior at [Compaction](http://localhost:3000/d/eb5c5196-8de5-4435-9a7d-d2bb4da869f4/compaction) dashboard.
+
+### Run defragmentation
+
+```bash
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9-arm64 defrag --endpoints=127.0.0.1:2379
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9-arm64 defrag --endpoints=127.0.0.1:22379
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9-arm64 defrag --endpoints=127.0.0.1:32379
+```
+
+For explanation of defragmentation process see [docs](https://etcd.io/docs/v3.5/op-guide/maintenance/#defragmentation).
+
+### Run defragmentation with delay
+
+Make sure that `put` benchmark is still running:
+```bash
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 compact-index-delta=100 --compact-interval=10s
+```
+
+Add delay:
+```bash
+curl http://127.0.0.1:11180/defragBeforeCopy -XPUT -d'sleep(10000)'
+curl http://127.0.0.1:21180/defragBeforeCopy -XPUT -d'sleep(10000)'
+curl http://127.0.0.1:31180/defragBeforeCopy -XPUT -d'sleep(10000)'
+```
+
+Run defrag for non-leader:
+```bash
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9-arm64 defrag --endpoints=127.0.0.1:32379
+```
+
+Observe behavior at [Defrag](http://localhost:3000/d/bb7bc45f-5370-401d-8212-3408c6936f5c/defrag) dashboard. Check out grpc error rate.
+
+Run defrag for leader:
+```bash
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9-arm64 defrag --endpoints=127.0.0.1:2379
+```
 
 ## Glossary
 

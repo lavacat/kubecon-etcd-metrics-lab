@@ -41,3 +41,23 @@ providers:
   options:
     path: /etc/grafana/provisioning/dashboards/peers.json
     foldersFromFilesStructure: true
+- name: 'compaction'
+  orgId: 1
+  folder: ''
+  type: file
+  disableDeletion: false
+  updateIntervalSeconds: 1
+  editable: true
+  options:
+    path: /etc/grafana/provisioning/dashboards/compaction.json
+    foldersFromFilesStructure: true
+- name: 'defrag'
+  orgId: 1
+  folder: ''
+  type: file
+  disableDeletion: false
+  updateIntervalSeconds: 1
+  editable: true
+  options:
+    path: /etc/grafana/provisioning/dashboards/defrag.json
+    foldersFromFilesStructure: true
