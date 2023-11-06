@@ -4,7 +4,7 @@
 
 Start 3-node etcd cluster with grafana and prometheus
 ```bash
-docker-compose -f docker-compose-etcd.yml -f docker-compose-metrics.yml up
+docker-compose -f docker-compose-etcd.yml -f docker-compose-metrics.yml up --force-recreate -V
 ```
 To verify:
 ```bash
@@ -12,7 +12,7 @@ docker ps --all
 ```
 Output:
 ```bash
-➜  ~ podman ps --all
+➜  ~ docker ps --all
 CONTAINER ID  IMAGE                                  COMMAND               CREATED         STATUS         PORTS                                              NAMES
 8c2060085521  docker.io/bkanivets/etcd:v3.5.9  --name=etcd-1 --i...  26 seconds ago  Up 21 seconds  0.0.0.0:2379->2379/tcp, 0.0.0.0:11180->11180/tcp   kubecon-etcd-metrics-lab_etcd-1_1
 e89e0d64213e  docker.io/bkanivets/etcd:v3.5.9  --name=etcd-2 --i...  25 seconds ago  Up 20 seconds  0.0.0.0:21180->11180/tcp, 0.0.0.0:22379->2379/tcp  kubecon-etcd-metrics-lab_etcd-2_1
@@ -72,10 +72,10 @@ Adjust `-rx-delay` in docker-compose-etcd-bridge.yml
 
 Start cluster with `bridge` interface.
 ```bash
-docker-compose -f docker-compose-etcd-bridge.yml -f docker-compose-metrics.yml up
+docker-compose -f docker-compose-etcd-bridge.yml -f docker-compose-metrics.yml up --force-recreate -V
 ```
 
-Check [Peers](http://localhost:3000/d/f3469871-37dd-4af7-acb1-ef0c1f7d5747/peers) dashboard.
+Check [Peers](http://localhost:3000/d/f3c3b742-47e8-4bda-8631-a1d540d0f130/peers) dashboard.
 
 Run `put` benchmark with 1000 clients
 ```bash
@@ -85,11 +85,9 @@ Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b
 
 
 ## Scenario 3: reaching DB size limit
-Reset delay if any:
+Stop previous cluster and start new:
 ```bash
-curl http://127.0.0.1:11180/walBeforeFdatasync -XPUT -d'sleep(1)'
-curl http://127.0.0.1:21180/walBeforeFdatasync -XPUT -d'sleep(1)'
-curl http://127.0.0.1:31180/walBeforeFdatasync -XPUT -d'sleep(1)'
+docker-compose -f docker-compose-etcd.yml -f docker-compose-metrics.yml up --force-recreate -V
 ```
 
 Run `put` benchmark with increased val size
@@ -100,6 +98,11 @@ docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/
 Default limit it 2Gb. Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
 
 ## Scenario 4: compaction and defragmentation
+
+Stop previous cluster and start new:
+```bash
+docker-compose -f docker-compose-etcd.yml -f docker-compose-metrics.yml up --force-recreate -V
+```
 
 Run `put` benchmark with `compaction`
 ```bash

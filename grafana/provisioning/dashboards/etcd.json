@@ -20,7 +20,6 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 3070,
   "graphTooltip": 0,
-  "id": 3,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -91,7 +90,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.4",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -169,7 +168,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.4",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -247,7 +246,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.1.4",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
@@ -302,7 +301,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.1.4",
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -407,7 +406,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.1.4",
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -514,7 +513,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.1.4",
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -609,7 +608,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.1.4",
+      "pluginVersion": "10.2.0",
       "pointradius": 1,
       "points": false,
       "renderer": "flot",
@@ -715,7 +714,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.1.4",
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -781,12 +780,14 @@
       "editable": true,
       "error": false,
       "fill": 5,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 6,
         "x": 0,
         "y": 21
       },
+      "hiddenSeries": false,
       "id": 22,
       "legend": {
         "avg": false,
@@ -801,7 +802,11 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -825,6 +830,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Client Traffic In",
       "tooltip": {
         "msResolution": false,
@@ -849,7 +855,10 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -863,12 +872,14 @@
       "editable": true,
       "error": false,
       "fill": 5,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 6,
         "x": 6,
         "y": 21
       },
+      "hiddenSeries": false,
       "id": 21,
       "legend": {
         "avg": false,
@@ -883,7 +894,11 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -907,6 +922,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Client Traffic Out",
       "tooltip": {
         "msResolution": false,
@@ -931,7 +947,10 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -945,12 +964,14 @@
       "editable": true,
       "error": false,
       "fill": 0,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 6,
         "x": 12,
         "y": 21
       },
+      "hiddenSeries": false,
       "id": 20,
       "legend": {
         "avg": false,
@@ -965,7 +986,11 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -989,6 +1014,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Peer Traffic In",
       "tooltip": {
         "msResolution": false,
@@ -1013,7 +1039,10 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -1027,6 +1056,7 @@
       "editable": true,
       "error": false,
       "fill": 0,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 7,
@@ -1034,6 +1064,7 @@
         "x": 18,
         "y": 21
       },
+      "hiddenSeries": false,
       "id": 16,
       "legend": {
         "avg": false,
@@ -1048,7 +1079,11 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1074,6 +1109,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Peer Traffic Out",
       "tooltip": {
         "msResolution": false,
@@ -1098,7 +1134,10 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -1112,12 +1151,14 @@
       "editable": true,
       "error": false,
       "fill": 0,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
         "y": 28
       },
+      "hiddenSeries": false,
       "id": 40,
       "legend": {
         "avg": false,
@@ -1132,7 +1173,11 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1194,6 +1239,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Raft Proposals",
       "tooltip": {
         "msResolution": false,
@@ -1219,7 +1265,10 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -1234,12 +1283,14 @@
       "editable": true,
       "error": false,
       "fill": 0,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
         "y": 28
       },
+      "hiddenSeries": false,
       "id": 19,
       "legend": {
         "alignAsTable": false,
@@ -1256,7 +1307,11 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1280,6 +1335,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Total Leader Elections Per Day",
       "tooltip": {
         "msResolution": false,
@@ -1304,7 +1360,10 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -1317,12 +1376,14 @@
       },
       "description": "proposals_committed_total records the total number of consensus proposals committed. This gauge should increase over time if the cluster is healthy. Several healthy members of an etcd cluster may have different total committed proposals at once. This discrepancy may be due to recovering from peers after starting, lagging behind the leader, or being the leader and therefore having the most commits. It is important to monitor this metric across all the members in the cluster; a consistently large lag between a single member and its leader indicates that member is slow or unhealthy.\n\nproposals_applied_total records the total number of consensus proposals applied. The etcd server applies every committed proposal asynchronously. The difference between proposals_committed_total and proposals_applied_total should usually be small (within a few thousands even under high load). If the difference between them continues to rise, it indicates that the etcd server is overloaded. This might happen when applying expensive queries like heavy range queries or large txn operations.",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
         "y": 35
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "alignAsTable": true,
@@ -1339,7 +1400,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1376,6 +1441,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "The total number of consensus proposals committed",
       "tooltip": {
         "shared": true,
@@ -1400,7 +1466,10 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -1413,12 +1482,14 @@
       },
       "description": "indicates how many proposals are queued to commit. Rising pending proposals suggests there is a high client load or the member cannot commit proposals.",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
         "y": 35
       },
+      "hiddenSeries": false,
       "id": 5,
       "legend": {
         "avg": false,
@@ -1433,7 +1504,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1456,6 +1531,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Proposals pending",
       "tooltip": {
         "shared": true,
@@ -1479,7 +1555,10 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -1491,12 +1570,14 @@
         "uid": "PBFA97CFB590B2093"
       },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 42
       },
+      "hiddenSeries": false,
       "id": 7,
       "legend": {
         "avg": false,
@@ -1511,7 +1592,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1546,6 +1631,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Disks operations",
       "tooltip": {
         "shared": true,
@@ -1569,7 +1655,10 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -1581,12 +1670,14 @@
         "uid": "PBFA97CFB590B2093"
       },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 49
       },
+      "hiddenSeries": false,
       "id": 8,
       "legend": {
         "avg": false,
@@ -1601,7 +1692,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1636,6 +1731,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Network",
       "tooltip": {
         "shared": true,
@@ -1659,7 +1755,10 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {},
@@ -1672,12 +1771,14 @@
       },
       "description": "Abnormally high snapshot duration (snapshot_save_total_duration_seconds) indicates disk issues and might cause the cluster to be unstable.",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 56
       },
+      "hiddenSeries": false,
       "id": 9,
       "legend": {
         "avg": false,
@@ -1692,7 +1793,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.2.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1715,6 +1820,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Snapshot duration",
       "tooltip": {
         "shared": true,
@@ -1738,18 +1844,20 @@
           "logBase": 1,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false
+      }
     }
   ],
-  "refresh": "",
+  "refresh": "5s",
   "schemaVersion": 38,
-  "style": "dark",
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
