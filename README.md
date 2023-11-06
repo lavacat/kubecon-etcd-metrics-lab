@@ -14,16 +14,16 @@ Output:
 ```bash
 ➜  ~ podman ps --all
 CONTAINER ID  IMAGE                                  COMMAND               CREATED         STATUS         PORTS                                              NAMES
-8c2060085521  docker.io/bkanivets/etcd:v3.5.9-arm64  --name=etcd-1 --i...  26 seconds ago  Up 21 seconds  0.0.0.0:2379->2379/tcp, 0.0.0.0:11180->11180/tcp   kubecon-etcd-metrics-lab_etcd-1_1
-e89e0d64213e  docker.io/bkanivets/etcd:v3.5.9-arm64  --name=etcd-2 --i...  25 seconds ago  Up 20 seconds  0.0.0.0:21180->11180/tcp, 0.0.0.0:22379->2379/tcp  kubecon-etcd-metrics-lab_etcd-2_1
-163a3b97507f  docker.io/bkanivets/etcd:v3.5.9-arm64  --name=etcd-3 --i...  24 seconds ago  Up 19 seconds  0.0.0.0:31180->11180/tcp, 0.0.0.0:32379->2379/tcp  kubecon-etcd-metrics-lab_etcd-3_1
+8c2060085521  docker.io/bkanivets/etcd:v3.5.9  --name=etcd-1 --i...  26 seconds ago  Up 21 seconds  0.0.0.0:2379->2379/tcp, 0.0.0.0:11180->11180/tcp   kubecon-etcd-metrics-lab_etcd-1_1
+e89e0d64213e  docker.io/bkanivets/etcd:v3.5.9  --name=etcd-2 --i...  25 seconds ago  Up 20 seconds  0.0.0.0:21180->11180/tcp, 0.0.0.0:22379->2379/tcp  kubecon-etcd-metrics-lab_etcd-2_1
+163a3b97507f  docker.io/bkanivets/etcd:v3.5.9  --name=etcd-3 --i...  24 seconds ago  Up 19 seconds  0.0.0.0:31180->11180/tcp, 0.0.0.0:32379->2379/tcp  kubecon-etcd-metrics-lab_etcd-3_1
 81db7802ceba  docker.io/prom/prometheus:latest       --config.file=/et...  23 seconds ago  Up 18 seconds  0.0.0.0:9090->9090/tcp                             kubecon-etcd-metrics-lab_prometheus_1
 f04a2e245717  docker.io/grafana/grafana:latest                             21 seconds ago  Up 17 seconds  0.0.0.0:3000->3000/tcp                             kubecon-etcd-metrics-lab_grafana_1
 ```
 
 Try running benchmark:
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=27 --conns=20 put --sequential-keys --key-space-size=100000 --total=100000
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=27 --conns=20 put --sequential-keys --key-space-size=100000 --total=100000
 ```
 
 Check out default etcd [dashboard](http://localhost:3000/d/e3f3beda-14fe-47ad-a431-c8227c997a53/etcd-by-prometheus)
@@ -41,7 +41,7 @@ curl http://127.0.0.1:31180/walBeforeFdatasync -XPUT -d'sleep(100)'
 
 Run `put` benchmark with 1000 clients
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=100000
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=100000
 ```
 Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
 
@@ -54,14 +54,14 @@ curl http://127.0.0.1:31180/walBeforeFdatasync -XPUT -d'sleep(1000)'
 
 Run `range` benchmark with 100 clients (while prior benchmark is still running)
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 range /
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 range /
 ```
 
 Observe behavior at [Ranges](http://localhost:3000/d/ad0da30b-2128-4455-8cef-31424b06b7b9/ranges) dashboard.
 
 Try `range` benchmark with `--consistency=s`
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 --consistency=s range /
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 --consistency=s range /
 ```
 
 ## Scenario 2: delay network
@@ -79,7 +79,7 @@ Check [Peers](http://localhost:3000/d/f3469871-37dd-4af7-acb1-ef0c1f7d5747/peers
 
 Run `put` benchmark with 1000 clients
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=100000
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=100000
 ```
 Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
 
@@ -94,7 +94,7 @@ curl http://127.0.0.1:31180/walBeforeFdatasync -XPUT -d'sleep(1)'
 
 Run `put` benchmark with increased val size
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=10000 --key-space-size=100000 --total=10000000
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=10000 --key-space-size=100000 --total=10000000
 ```
 
 Default limit it 2Gb. Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
@@ -103,7 +103,7 @@ Default limit it 2Gb. Observe behavior at [Puts](http://localhost:3000/d/ac2a857
 
 Run `put` benchmark with `compaction`
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 compact-index-delta=100 --compact-interval=10s
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 compact-index-delta=100 --compact-interval=10s
 ```
 
 Observe behavior at [Compaction](http://localhost:3000/d/eb5c5196-8de5-4435-9a7d-d2bb4da869f4/compaction) dashboard.
@@ -111,9 +111,9 @@ Observe behavior at [Compaction](http://localhost:3000/d/eb5c5196-8de5-4435-9a7d
 ### Run defragmentation
 
 ```bash
-docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9-arm64 defrag --endpoints=127.0.0.1:2379
-docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9-arm64 defrag --endpoints=127.0.0.1:22379
-docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9-arm64 defrag --endpoints=127.0.0.1:32379
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 defrag --endpoints=127.0.0.1:2379
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 defrag --endpoints=127.0.0.1:22379
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 defrag --endpoints=127.0.0.1:32379
 ```
 
 For explanation of defragmentation process see [docs](https://etcd.io/docs/v3.5/op-guide/maintenance/#defragmentation).
@@ -122,7 +122,7 @@ For explanation of defragmentation process see [docs](https://etcd.io/docs/v3.5/
 
 Make sure that `put` benchmark is still running:
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9-arm64 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 compact-index-delta=100 --compact-interval=10s
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 compact-index-delta=100 --compact-interval=10s
 ```
 
 Add delay:
@@ -134,14 +134,14 @@ curl http://127.0.0.1:31180/defragBeforeCopy -XPUT -d'sleep(10000)'
 
 Run defrag for non-leader:
 ```bash
-docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9-arm64 defrag --endpoints=127.0.0.1:32379
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 defrag --endpoints=127.0.0.1:32379
 ```
 
 Observe behavior at [Defrag](http://localhost:3000/d/bb7bc45f-5370-401d-8212-3408c6936f5c/defrag) dashboard. Check out grpc error rate.
 
 Run defrag for leader:
 ```bash
-docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9-arm64 defrag --endpoints=127.0.0.1:2379
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 defrag --endpoints=127.0.0.1:2379
 ```
 
 ## Glossary

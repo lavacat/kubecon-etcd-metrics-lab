@@ -3,7 +3,7 @@ version: '3.8'
 x-variables:
     flag_initial_cluster_token: &flag_initial_cluster_token '--initial-cluster-token=tkn'
     common_settings: &common_settings
-        image: docker.io/bkanivets/etcd:v3.5.9-arm64
+        image: docker.io/bkanivets/etcd:v3.5.9
         restart: always
         entrypoint: /usr/local/bin/etcd
 
