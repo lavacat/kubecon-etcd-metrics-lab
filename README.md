@@ -43,7 +43,7 @@ Run `put` benchmark with 1000 clients
 ```bash
 docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=100000
 ```
-Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
+Observe behavior at [Puts](http://localhost:3000/d/f3469871-37dd-4af7-acb1-ef0c1f7d5747/puts) dashboard.
 
 ### Add large delay
 ```bash
@@ -81,7 +81,7 @@ Run `put` benchmark with 1000 clients
 ```bash
 docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=100000
 ```
-Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
+Observe behavior at [Puts](http://localhost:3000/d/f3469871-37dd-4af7-acb1-ef0c1f7d5747/puts) dashboard.
 
 
 ## Scenario 3: reaching DB size limit
@@ -95,7 +95,7 @@ Run `put` benchmark with increased val size
 docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=10000 --key-space-size=100000 --total=10000000
 ```
 
-Default limit it 2Gb. Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
+Default limit it 2Gb. Observe behavior at [Puts](http://localhost:3000/d/f3469871-37dd-4af7-acb1-ef0c1f7d5747/puts) dashboard.
 
 ## Scenario 4: compaction and defragmentation
 
