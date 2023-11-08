@@ -23,14 +23,34 @@ f04a2e245717  docker.io/grafana/grafana:latest                             21 se
 
 Try running benchmark:
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=27 --conns=20 put --sequential-keys --key-space-size=100000 --total=100000
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --key-space-size=100000 --total=10000
 ```
 
 Check out default etcd [dashboard](http://localhost:3000/d/e3f3beda-14fe-47ad-a431-c8227c997a53/etcd-by-prometheus)
 
-Explore sequence diagrams for [Puts](https://mermaid.live/edit#pako:eNqNVdmO2jAU_RXLTzMqiQhhCX5AoouqSt0E7YxURULGvgzRECfjOAwU8e-9DmsgZAov4S7nnLuFDRWJBMpoBi85KAEfI_6keRyqabIin3UqQhUqgp-UaxOJKOXKkKWPDvd5OQa9BB0qUDJU5wFghMwKp_sJHw9xFnPEZ-YaUaPV_Y5Srl1nWDZqF1Qwljlf-cJ9HH69KYSn6SIC_eDvdHxbCnFNFqPVfdSRgYcIXm_4IyVhVVH1lItnNLrvuRHzXysrMFQ8N4nK46mt36KVe-cMBu8qm8XIz9zc3VfmOIOygWUGVYCcmMRgE74ocUishLacx34jj07SJIP6FGdQrTItkvkim6RYeaSeztmPJM5FmYc5MvJqW01GwOWaiDlXVxoOoRZhP2FGxnx51Ls3IsXRjQ-TWbZWYiJzzU2UqEkGIlEyc39MC9yKYo9EpVJPSk-ViiSOI3Pq9xhMPd7NEe-qt4u5FtXll6dWtc2MDG1-hYJjiE0tL3Zpu8ouG3yxyIz8VhmfwRheatNOx1GH7wwutdjfkzQ3-34OpaytpqahRStHkOULfElF_M2e3lrrs2nveOtnXZ7SxXHaVqCkNFEZ_N85o2i5qDrntxJJkYlXeGvfLwbrVIz6Q7Hdd_cEEHFNvGYzzqqTncFV8t6wP5Ha89t9aYPGoGMeSfwP2liekJo5xBBSho-S6-eQhmqLcfZFOsajpszoHBo0TyU3h_8rymY4LLTii5iyDV1R1u65Hb_lt4Ou3wq8VqdB15Q5bbfZ6bS7_X7Q7_W6Xc_bNujfJEEADz1eP-gEvU4r6AW-5xdofwqnpdz-AxFKhD0) and [Ranges](https://mermaid.live/edit#pako:eNqFVMGOmzAQ_RXLp1YNKOAtJD4gVdo97KWVsu0eKqTIsScJChhqG5I0yr_XZstqYVmCL8jz3ps3M7YvmJcCMMUa_tQgOdxnbKdYkUq3KqZMxrOKSYMaoiruH5onUA2oYRQMF7qN-A_2twNtyhNasa1JJbLfW4Kyu_53m_t96I2WQ72AQIoPM7KqyjNQz6SPKBrO_RUw8ZzBsR_aMH6wim305-mlWFabUtbFxvl2lvoFe0nyZbRIaguUO_j0eZTlJf0Nqo21AWJtSsNy_1Hyjjgq7rK-dspmsnYfpYDTNMlLxp3qvDyuldVYZ04E9HsXr8m8QcHdJCg6qsxAa-WM-J7JG_bH5jTo2RjEUXsDHHB6MQfuj5SibakQML5HChqKfknNtjCh4CWDbMph_zfomxAf5p2obwW6zs10jVNnyvKrUmq40eHBCRvj3jqVdowiHzuVt4ioZWZyt9bASym0_2PTmnQC3cIzXIAqWCbsQ3Nxwik2eyggxdT-CqYOKU7l1eLcJXw6S46pUTXMcF0JZrpHCdMty7XdtXcY0ws-YRou_DmZLxfBPCKLuzCOyQyfMY1jP4yigERBtLwjJLrO8N-ytAJzf0m-hlEYBDFZxhYTtWq_26BLef0HJo_FLg)
+## Scenario 0: Puts and Ranges
+Explore sequence diagram for [Puts](https://mermaid.live/edit#pako:eNqNVdmO2jAU_RXLTzMqiQhhCX5AoouqSt0E7YxURULGvgzRECfjOAwU8e-9DmsgZAov4S7nnLuFDRWJBMpoBi85KAEfI_6keRyqabIin3UqQhUqgp-UaxOJKOXKkKWPDvd5OQa9BB0qUDJU5wFghMwKp_sJHw9xFnPEZ-YaUaPV_Y5Srl1nWDZqF1Qwljlf-cJ9HH69KYSn6SIC_eDvdHxbCnFNFqPVfdSRgYcIXm_4IyVhVVH1lItnNLrvuRHzXysrMFQ8N4nK46mt36KVe-cMBu8qm8XIz9zc3VfmOIOygWUGVYCcmMRgE74ocUishLacx34jj07SJIP6FGdQrTItkvkim6RYeaSeztmPJM5FmYc5MvJqW01GwOWaiDlXVxoOoRZhP2FGxnx51Ls3IsXRjQ-TWbZWYiJzzU2UqEkGIlEyc39MC9yKYo9EpVJPSk-ViiSOI3Pq9xhMPd7NEe-qt4u5FtXll6dWtc2MDG1-hYJjiE0tL3Zpu8ouG3yxyIz8VhmfwRheatNOx1GH7wwutdjfkzQ3-34OpaytpqahRStHkOULfElF_M2e3lrrs2nveOtnXZ7SxXHaVqCkNFEZ_N85o2i5qDrntxJJkYlXeGvfLwbrVIz6Q7Hdd_cEEHFNvGYzzqqTncFV8t6wP5Ha89t9aYPGoGMeSfwP2liekJo5xBBSho-S6-eQhmqLcfZFOsajpszoHBo0TyU3h_8rymY4LLTii5iyDV1R1u65Hb_lt4Ou3wq8VqdB15Q5bbfZ6bS7_X7Q7_W6Xc_bNujfJEEADz1eP-gEvU4r6AW-5xdofwqnpdz-AxFKhD0)
+
+Run `put` benchmark with 1000 clients
+```bash
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=1000000
+```
+Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
+
+Explore sequence diagram for [Ranges](https://mermaid.live/edit#pako:eNqFVMGOmzAQ_RXLp1YNKOAtJD4gVdo97KWVsu0eKqTIsScJChhqG5I0yr_XZstqYVmCL8jz3ps3M7YvmJcCMMUa_tQgOdxnbKdYkUq3KqZMxrOKSYMaoiruH5onUA2oYRQMF7qN-A_2twNtyhNasa1JJbLfW4Kyu_53m_t96I2WQ72AQIoPM7KqyjNQz6SPKBrO_RUw8ZzBsR_aMH6wim305-mlWFabUtbFxvl2lvoFe0nyZbRIaguUO_j0eZTlJf0Nqo21AWJtSsNy_1Hyjjgq7rK-dspmsnYfpYDTNMlLxp3qvDyuldVYZ04E9HsXr8m8QcHdJCg6qsxAa-WM-J7JG_bH5jTo2RjEUXsDHHB6MQfuj5SibakQML5HChqKfknNtjCh4CWDbMph_zfomxAf5p2obwW6zs10jVNnyvKrUmq40eHBCRvj3jqVdowiHzuVt4ioZWZyt9bASym0_2PTmnQC3cIzXIAqWCbsQ3Nxwik2eyggxdT-CqYOKU7l1eLcJXw6S46pUTXMcF0JZrpHCdMty7XdtXcY0ws-YRou_DmZLxfBPCKLuzCOyQyfMY1jP4yigERBtLwjJLrO8N-ytAJzf0m-hlEYBDFZxhYTtWq_26BLef0HJo_FLg)
+
+Run `range` benchmark with 100 clients (while prior benchmark is still running)
+```bash
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 range / --total=100000
+```
+Observe behavior at [Ranges](http://localhost:3000/d/ad0da30b-2128-4455-8cef-31424b06b7b9/ranges) dashboard.
 
 ## Scenario 1: delay fsync
+
+Run `put` benchmark with 1000 clients (if prior benchmark stopped).
+```bash
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=1000000
+```
 
 ### Add small delay
 ```bash
@@ -39,10 +59,6 @@ curl http://127.0.0.1:21180/walBeforeFdatasync -XPUT -d'sleep(100)'
 curl http://127.0.0.1:31180/walBeforeFdatasync -XPUT -d'sleep(100)'
 ```
 
-Run `put` benchmark with 1000 clients
-```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=1000 --conns=1000 put --sequential-keys --key-space-size=100000 --total=100000
-```
 Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
 
 ### Add large delay
@@ -52,23 +68,23 @@ curl http://127.0.0.1:21180/walBeforeFdatasync -XPUT -d'sleep(1000)'
 curl http://127.0.0.1:31180/walBeforeFdatasync -XPUT -d'sleep(1000)'
 ```
 
-Run `range` benchmark with 100 clients (while prior benchmark is still running)
+Run `range` benchmark with 100 clients (while 'put' benchmark is still running)
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 range /
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 range / --total=100000
 ```
 
 Observe behavior at [Ranges](http://localhost:3000/d/ad0da30b-2128-4455-8cef-31424b06b7b9/ranges) dashboard.
 
 Try `range` benchmark with `--consistency=s`
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 --consistency=s range /
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 --consistency=s range / --total=100000
 ```
 
 ## Scenario 2: delay network
 
 Stop cluster after scenario 1.
 
-Adjust `-rx-delay` in docker-compose-etcd-bridge.yml
+Check out `-rx-delay` in docker-compose-etcd-bridge.yml. It should be set to 1000ms.
 
 Start cluster with `bridge` interface.
 ```bash
