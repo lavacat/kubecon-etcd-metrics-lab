@@ -2,6 +2,8 @@
 
 ## Prerequisites
 
+Note: image is only for linux/amd64 and linux/arm64. Tested on mac and linux.
+
 Start 3-node etcd cluster with grafana and prometheus:
 ```bash
 docker-compose -f docker-compose-etcd.yml -f docker-compose-metrics.yml up --force-recreate -V
