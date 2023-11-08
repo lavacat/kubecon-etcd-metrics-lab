@@ -46,6 +46,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -141,6 +142,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -236,6 +238,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -344,6 +347,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -438,6 +442,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -491,7 +496,7 @@
         "x": 0,
         "y": 37
       },
-      "id": 8,
+      "id": 5,
       "options": {
         "legend": {
           "calcs": [],
@@ -511,14 +516,14 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "rate(etcd_server_proposals_applied_total[1m])",
+          "expr": "rate(etcd_server_proposals_committed_total[1m])",
           "instant": false,
           "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "server: proposals applied/s",
+      "title": "server: proposals committed/s",
       "type": "timeseries"
     },
     {
@@ -532,6 +537,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -585,7 +591,7 @@
         "x": 0,
         "y": 45
       },
-      "id": 5,
+      "id": 8,
       "options": {
         "legend": {
           "calcs": [],
@@ -605,14 +611,14 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "rate(etcd_server_proposals_committed_total[1m])",
+          "expr": "rate(etcd_server_proposals_applied_total[1m])",
           "instant": false,
           "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "server: proposals committed/s",
+      "title": "server: proposals applied/s",
       "type": "timeseries"
     },
     {
@@ -626,6 +632,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -679,7 +686,7 @@
         "x": 0,
         "y": 53
       },
-      "id": 12,
+      "id": 23,
       "options": {
         "legend": {
           "calcs": [],
@@ -699,14 +706,14 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "rate(etcd_server_proposals_failed_total[1m])",
+          "expr": "etcd_server_proposals_committed_total - etcd_server_proposals_applied_total",
           "instant": false,
           "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "server: proposals failed/s",
+      "title": "server: proposals (committed - applied)",
       "type": "timeseries"
     },
     {
@@ -720,6 +727,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -773,6 +781,101 @@
         "x": 0,
         "y": 61
       },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "rate(etcd_server_proposals_failed_total[1m])",
+          "instant": false,
+          "legendFormat": "{{instance}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "server: proposals failed/s",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 69
+      },
       "id": 20,
       "options": {
         "legend": {
@@ -809,7 +912,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 69
+        "y": 77
       },
       "id": 17,
       "panels": [],
@@ -827,6 +930,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -879,7 +983,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 70
+        "y": 78
       },
       "id": 6,
       "options": {
@@ -922,6 +1026,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -974,7 +1079,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 78
+        "y": 86
       },
       "id": 2,
       "options": {
@@ -1017,6 +1122,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1068,7 +1174,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 87
+        "y": 95
       },
       "id": 10,
       "options": {
@@ -1106,7 +1212,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 96
+        "y": 104
       },
       "id": 18,
       "panels": [],
@@ -1124,6 +1230,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1175,7 +1282,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 97
+        "y": 105
       },
       "id": 7,
       "options": {
@@ -1218,6 +1325,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1270,7 +1378,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 105
+        "y": 113
       },
       "id": 21,
       "options": {
@@ -1308,7 +1416,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 113
+        "y": 121
       },
       "id": 19,
       "panels": [],
@@ -1326,6 +1434,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1377,7 +1486,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 114
+        "y": 122
       },
       "id": 9,
       "options": {
@@ -1420,6 +1529,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1472,7 +1582,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 122
+        "y": 130
       },
       "id": 22,
       "options": {
@@ -1528,6 +1638,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1580,7 +1691,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 130
+        "y": 138
       },
       "id": 11,
       "options": {
@@ -1615,7 +1726,6 @@
   ],
   "refresh": "5s",
   "schemaVersion": 38,
-  "style": "dark",
   "tags": [],
   "templating": {
     "list": []
@@ -1628,6 +1738,6 @@
   "timezone": "",
   "title": "Puts",
   "uid": "ac2a8573-2a57-4b18-a9fd-d007b565f5e6",
-  "version": 21,
+  "version": 1,
   "weekStart": ""
 }

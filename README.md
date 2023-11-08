@@ -113,7 +113,7 @@ docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/
 
 Default limit it 2Gb. Observe behavior at [Puts](http://localhost:3000/d/ac2a8573-2a57-4b18-a9fd-d007b565f5e6/puts) dashboard.
 
-## Scenario 4: compaction and defragmentation
+## Scenario 4: compaction
 
 Stop previous cluster and start new:
 ```bash
@@ -122,26 +122,50 @@ docker-compose -f docker-compose-etcd.yml -f docker-compose-metrics.yml up --for
 
 Run `put` benchmark with `compaction`
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 compact-index-delta=100 --compact-interval=10s
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 compact-index-delta=10000 --compact-interval=10s
 ```
-
 Observe behavior at [Compaction](http://localhost:3000/d/eb5c5196-8de5-4435-9a7d-d2bb4da869f4/compaction) dashboard.
 
-### Run defragmentation
-
-```bash
-docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 defrag --endpoints=127.0.0.1:2379
-docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 defrag --endpoints=127.0.0.1:22379
-docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 defrag --endpoints=127.0.0.1:32379
+Compare database size total/in_use when running `put` benchmark without compaction
+```bach
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000
 ```
 
+### Generating ErrTooManyRequests (optional)
+Run `put` benchmark with increased value size and `compaction`
+```bash
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=10000 --key-space-size=100000 --total=10000000 compact-index-delta=1000 --compact-interval=30s
+```
+
+## Scenario 5: defragmentation
 For explanation of defragmentation process see [docs](https://etcd.io/docs/v3.5/op-guide/maintenance/#defragmentation).
+
+Stop previous cluster and start new:
+```bash
+docker-compose -f docker-compose-etcd.yml -f docker-compose-metrics.yml up --force-recreate -V
+```
+
+Increase db size by running `put` benchmark:
+```bash
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=10000 --key-space-size=100000 --total=101000
+```
+Run compaction once:
+```bash
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 compact 100000 --endpoints=127.0.0.1:2379
+```
+
+Run defrag on non-leader:
+```bash
+docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 defrag --endpoints=127.0.0.1:32379
+```
+Observe behavior at [Defrag](http://localhost:3000/d/bb7bc45f-5370-401d-8212-3408c6936f5c/defrag) dashboard.
+
 
 ### Run defragmentation with delay
 
-Make sure that `put` benchmark is still running:
+Make sure that `put` benchmark is running:
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 compact-index-delta=100 --compact-interval=10s
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000
 ```
 
 Add delay:
