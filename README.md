@@ -157,9 +157,9 @@ Increase db size by running `put` benchmark:
 ```bash
 docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=10000 --key-space-size=100000 --total=101000
 ```
-Run compaction once:
+Run `put` benchmark with `compaction`:
 ```bash
-docker run --network="host" -it --entrypoint etcdctl --rm docker.io/bkanivets/etcd:v3.5.9 compact 100000 --endpoints=127.0.0.1:2379
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 --compact-index-delta=10000 --compact-interval=10s
 ```
 
 Run defrag on non-leader:
