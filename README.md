@@ -130,7 +130,7 @@ docker-compose -f docker-compose-etcd.yml -f docker-compose-metrics.yml up --for
 
 Run `put` benchmark with `compaction`:
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 compact-index-delta=10000 --compact-interval=10s
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=100 --key-space-size=100000 --total=10000000 --compact-index-delta=10000 --compact-interval=10s
 ```
 Observe behavior at [Compaction](http://localhost:3000/d/eb5c5196-8de5-4435-9a7d-d2bb4da869f4/compaction) dashboard.
 
@@ -142,7 +142,7 @@ docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/
 ### Generating ErrTooManyRequests (optional)
 Run `put` benchmark with increased value size and `compaction`
 ```bash
-docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=10000 --key-space-size=100000 --total=10000000 compact-index-delta=1000 --compact-interval=30s
+docker run --network="host" -it --entrypoint benchmark --rm docker.io/bkanivets/etcd:v3.5.9 --endpoints=127.0.0.1:2379,127.0.0.1:22379,127.0.0.1:32379 --clients=100 --conns=100 put --sequential-keys --val-size=10000 --key-space-size=100000 --total=10000000 --compact-index-delta=1000 --compact-interval=30s
 ```
 
 ## Scenario 5: defragmentation
